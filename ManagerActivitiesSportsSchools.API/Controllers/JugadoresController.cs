@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ManagerActivitiesSportsSchools.Infrastructure.Context;
-using ManagerActivitiesSportsSchools.API.DTOs;
-using ManagerActivitiesSportsSchools.Domain.Entities;
+using ManagerActivitiesSportsSchools.Application.Contract;
+using ManagerActivitiesSportsSchools.Application.Dtos.Jugador;
 
 namespace ManagerActivitiesSportsSchools.API.Controllers
 {
@@ -10,84 +8,49 @@ namespace ManagerActivitiesSportsSchools.API.Controllers
     [Route("api/[controller]")]
     public class JugadoresController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IJugadorService _service;
 
-        public JugadoresController(ApplicationDbContext context)
+        public JugadoresController(IJugadorService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var jugadores = await _context.Jugadores.ToListAsync();
-
+            var jugadores = await _service.GetAllAsync();
             return Ok(jugadores);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var jugador = await _context.Jugadores.FindAsync(id);
+            var jugador = await _service.GetByIdAsync(id);
 
             if (jugador == null)
-            {
                 return NotFound();
-            }
 
             return Ok(jugador);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(JugadorDTO dto)
+        public async Task<IActionResult> Post(SaveJugadorDto dto)
         {
-            var jugador = new Jugador
-            {
-                Nombre = dto.Nombre,
-                Edad = dto.Edad,
-                EquipoId = dto.EquipoId
-            };
-
-            _context.Jugadores.Add(jugador);
-
-            await _context.SaveChangesAsync();
-
-            return Ok(jugador);
+            await _service.CreateAsync(dto);
+            return Ok("Jugador creado correctamente.");
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, JugadorDTO dto)
+        public async Task<IActionResult> Put(int id, SaveJugadorDto dto)
         {
-            var jugador = await _context.Jugadores.FindAsync(id);
-
-            if (jugador == null)
-            {
-                return NotFound();
-            }
-
-            jugador.Nombre = dto.Nombre;
-            jugador.Edad = dto.Edad;
-            jugador.EquipoId = dto.EquipoId;
-
-            await _context.SaveChangesAsync();
-
+            await _service.UpdateAsync(id, dto);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var jugador = await _context.Jugadores.FindAsync(id);
-
-            if (jugador == null)
-            {
-                return NotFound();
-            }
-
-            _context.Jugadores.Remove(jugador);
-
-            await _context.SaveChangesAsync();
-
+            await _service.DeleteAsync(id);
             return NoContent();
         }
     }

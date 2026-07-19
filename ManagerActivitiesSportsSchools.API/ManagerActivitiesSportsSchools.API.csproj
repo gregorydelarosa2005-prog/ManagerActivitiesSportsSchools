@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ManagerActivitiesSportsSchools.Application\ManagerActivitiesSportsSchools.Application.csproj" />
     <ProjectReference Include="..\ManagerActivitiesSportsSchools.Domain\ManagerActivitiesSportsSchools.Domain.csproj" />
     <ProjectReference Include="..\ManagerActivitiesSportsSchools.Infrastructure\ManagerActivitiesSportsSchools.Infrastructure.csproj" />
   </ItemGroup>

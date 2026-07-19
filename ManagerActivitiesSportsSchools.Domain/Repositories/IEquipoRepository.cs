@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ManagerActivitiesSportsSchools.Domain.Repository
+using ManagerActivitiesSportsSchools.Domain.Entities;
+
+namespace ManagerActivitiesSportsSchools.Domain.Repositories;
+
+public interface IEquipoRepository
 {
-    public class IEquipoRepository
-    {
-    }
+    Task<List<Equipo>> GetAllAsync();
+    Task<Equipo?> GetByIdAsync(int id);
+    Task AddAsync(Equipo equipo);
+    Task UpdateAsync(Equipo equipo);
+    Task DeleteAsync(int id);
 }

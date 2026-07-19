@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="ManagerActivitiesSportsSchools.API/ManagerActivitiesSportsSchools.API.csproj" />
+  <Project Path="ManagerActivitiesSportsSchools.Application/ManagerActivitiesSportsSchools.Application.csproj" Id="15d02db1-6739-40e2-8c0c-ed4cee73ca02" />
   <Project Path="ManagerActivitiesSportsSchools.Domain/ManagerActivitiesSportsSchools.Domain.csproj" Id="37123495-2f14-4874-99cd-76515536c29b" />
   <Project Path="ManagerActivitiesSportsSchools.Infrastructure/ManagerActivitiesSportsSchools.Infrastructure.csproj" Id="64754419-561d-48ba-8c60-99340749e549" />
 </Solution>

@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using ManagerActivitiesSportsSchools.Infrastructure.Context;
-using ManagerActivitiesSportsSchools.Infrastructure.Interfaces;
 using ManagerActivitiesSportsSchools.Infrastructure.Repositories;
+using ManagerActivitiesSportsSchools.Application.Contract;
+using ManagerActivitiesSportsSchools.Application.Service;
+using ManagerActivitiesSportsSchools.Domain.Repositories;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();
 builder.Services.AddScoped<IJugadorRepository, JugadorRepository>();
 
+builder.Services.AddScoped<IEquipoService, EquipoService>();
+builder.Services.AddScoped<IJugadorService, JugadorService>();
 
 // Add services to the container.
 

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ManagerActivitiesSportsSchools.Infrastructure.Context;
-using ManagerActivitiesSportsSchools.Domain.Entities;
-using ManagerActivitiesSportsSchools.API.DTOs;
+using ManagerActivitiesSportsSchools.Application.Contract;
+using ManagerActivitiesSportsSchools.Application.Dtos.Equipo;
 
 namespace ManagerActivitiesSportsSchools.API.Controllers
 {
@@ -10,82 +8,49 @@ namespace ManagerActivitiesSportsSchools.API.Controllers
     [Route("api/[controller]")]
     public class EquiposController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IEquipoService _service;
 
-        public EquiposController(ApplicationDbContext context)
+        public EquiposController(IEquipoService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var equipos = await _context.Equipos.ToListAsync();
-
+            var equipos = await _service.GetAllAsync();
             return Ok(equipos);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(EquipoDTO dto)
-        {
-            var equipo = new Equipo
-            {
-                Nombre = dto.Nombre,
-                Categoria = dto.Categoria
-            };
-
-            _context.Equipos.Add(equipo);
-
-            await _context.SaveChangesAsync();
-
-            return Ok(equipo);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var equipo = await _context.Equipos.FindAsync(id);
+            var equipo = await _service.GetByIdAsync(id);
 
             if (equipo == null)
-            {
                 return NotFound();
-            }
 
             return Ok(equipo);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, EquipoDTO dto)
+        [HttpPost]
+        public async Task<IActionResult> Post(SaveEquipoDto dto)
         {
-            var equipo = await _context.Equipos.FindAsync(id);
+            await _service.CreateAsync(dto);
+            return Ok("Equipo creado correctamente.");
+        }
 
-            if (equipo == null)
-            {
-                return NotFound();
-            }
-
-            equipo.Nombre = dto.Nombre;
-            equipo.Categoria = dto.Categoria;
-
-            await _context.SaveChangesAsync();
-
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, SaveEquipoDto dto)
+        {
+            await _service.UpdateAsync(id, dto);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var equipo = await _context.Equipos.FindAsync(id);
-
-            if (equipo == null)
-            {
-                return NotFound();
-            }
-
-            _context.Equipos.Remove(equipo);
-
-            await _context.SaveChangesAsync();
-
+            await _service.DeleteAsync(id);
             return NoContent();
         }
     }
