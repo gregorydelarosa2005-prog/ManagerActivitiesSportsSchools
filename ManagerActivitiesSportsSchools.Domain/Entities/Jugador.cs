@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ManagerActivitiesSportsSchools.Domain.Entities
 {
-    internal class Jugador
+    public class Jugador
     {
         public int Id { get; set; }
 

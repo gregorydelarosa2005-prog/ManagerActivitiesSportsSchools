@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using ManagerActivitiesSportsSchools.Domain.Entities;
 
 namespace ManagerActivitiesSportsSchools.Infrastructure.Context
 {

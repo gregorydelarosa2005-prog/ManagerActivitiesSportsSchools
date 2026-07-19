@@ -1,7 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using ManagerActivitiesSportsSchools.API.Data;
+using ManagerActivitiesSportsSchools.Infrastructure.Context;
+using ManagerActivitiesSportsSchools.Infrastructure.Interfaces;
+using ManagerActivitiesSportsSchools.Infrastructure.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();
+builder.Services.AddScoped<IJugadorRepository, JugadorRepository>();
+
 
 // Add services to the container.
 

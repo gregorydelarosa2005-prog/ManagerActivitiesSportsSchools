@@ -6,12 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Repository\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ManagerActivitiesSportsSchools.Infrastructure\ManagerActivitiesSportsSchools.Infrastructure.csproj" />
-  </ItemGroup>
-
 </Project>

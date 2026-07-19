@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ManagerActivitiesSportsSchools.API.Data;
+using ManagerActivitiesSportsSchools.Infrastructure.Context;
 using ManagerActivitiesSportsSchools.API.DTOs;
-using ManagerActivitiesSportsSchools.API.Entities;
+using ManagerActivitiesSportsSchools.Domain.Entities;
 
 namespace ManagerActivitiesSportsSchools.API.Controllers
 {
