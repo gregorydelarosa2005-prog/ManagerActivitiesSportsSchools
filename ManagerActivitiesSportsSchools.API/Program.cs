@@ -5,18 +5,24 @@ using ManagerActivitiesSportsSchools.Application.Contract;
 using ManagerActivitiesSportsSchools.Application.Service;
 using ManagerActivitiesSportsSchools.Domain.Repositories;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();
 builder.Services.AddScoped<IJugadorRepository, JugadorRepository>();
 
 builder.Services.AddScoped<IEquipoService, EquipoService>();
 builder.Services.AddScoped<IJugadorService, JugadorService>();
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 
@@ -32,15 +38,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowReact");
+
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
